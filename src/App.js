@@ -1,13 +1,14 @@
-import { Fragment } from 'react/cjs/react.development';
 import RegistrationForm from './components/RegistrationForm/RegistrationForm'
 import './App.css';
+import { Container, Typography } from '@mui/material';
+import '@fontsource/roboto/400.css';
 
 function App() {
   return (
-    <Fragment>
-      <h1>Registration Form</h1>
+    <Container component='article' maxWidth='sm'>
+      <Typography variant='h3' component='h1' align='center'>Registration Form</Typography>
       <RegistrationForm />
-    </Fragment>
+    </Container>
   );
 }
 

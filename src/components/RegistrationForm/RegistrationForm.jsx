@@ -1,24 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Button from '@mui/material/Button';
+import { TextField, Button, Switch, FormControlLabel } from '@mui/material';
 
 function RegistrationForm() {
   return (
     <form>
-      <label>Name</label>
-      <input type='text'></input>
+      <TextField id='name' label='Name' fullWidth margin='normal' />
+      <TextField id='lastName' label='Last Name' fullWidth margin='normal' />
 
-      <label>Last Name</label>
-      <input type='text'></input>
+      <TextField id='cpf' label='CPF' fullWidth margin='normal' />
+      <FormControlLabel
+        label='Promotions'
+        control={
+          <Switch name='promotions' defaultChecked={true} color='primary' />
+        }
+      />
+      <FormControlLabel
+        label='News Letter'
+        control={
+          <Switch name='newsLetter' defaultChecked={true} color='primary' />
+        }
+      />
 
-      <label>CPF</label>
-      <input type='text'></input>
-
-      <label>Promotions</label>
-      <input type='checkbox'></input>
-
-      <label>News Letter</label>
-      <input type='checkbox'></input>
       <Button type='submit' variant='contained'>
         Confirm
       </Button>
