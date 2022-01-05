@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { TextField, Button, Switch, FormControlLabel } from '@mui/material';
 
-function RegistrationForm() {
+function RegistrationForm({ onSubmit }) {
+  // deconstructing the object 'props'
   const [name, setName] = useState('Artur');
   const [lastName, setLastName] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [newsLetter, setNewsLetter] = useState(true);
+  const [promotions, setPromotions] = useState(true);
+
   return (
     <form
       onSubmit={(event) => {
-        console.log(name);
-
         event.preventDefault();
+        onSubmit({ name, lastName, cpf, promotions, newsLetter });
       }}
     >
       <TextField
@@ -20,9 +23,7 @@ function RegistrationForm() {
         margin='normal'
         value={name}
         onChange={(event) => {
-          let tempName = event.target.value;
-          if (tempName.length >= 3) tempName = tempName.substring(0, 3);
-          setName(tempName);
+          setName(event.target.value);
         }}
       />
       <TextField
@@ -31,19 +32,45 @@ function RegistrationForm() {
         label='Last Name'
         fullWidth
         margin='normal'
+        onChange={(event) => {
+          setLastName(event.target.value);
+        }}
       />
 
-      <TextField id='cpf' label='CPF' fullWidth margin='normal' />
+      <TextField
+        id='cpf'
+        label='CPF'
+        fullWidth
+        margin='normal'
+        value={cpf}
+        onChangeCapture={(event) => {
+          setCpf(event.target.value);
+        }}
+      />
       <FormControlLabel
         label='Promotions'
         control={
-          <Switch name='promotions' defaultChecked={true} color='primary' />
+          <Switch
+            checked={promotions}
+            name='promotions'
+            color='primary'
+            onChange={(event) => {
+              setPromotions(event.target.checked);
+            }}
+          />
         }
       />
       <FormControlLabel
         label='News Letter'
         control={
-          <Switch name='newsLetter' defaultChecked={true} color='primary' />
+          <Switch
+            checked={newsLetter}
+            name='newsLetter'
+            onChange={(event) => {
+              setNewsLetter(event.target.checked);
+            }}
+            color='primary'
+          />
         }
       />
 
