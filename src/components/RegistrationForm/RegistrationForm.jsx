@@ -7,24 +7,17 @@ import UserData from './UserData';
 function RegistrationForm({ onSubmit, validateCpf }) {
   const [currentPage, setCurrentPage] = useState(0);
 
+  const form = [
+    <UserData onSubmit={nextStage} />,
+    <PersonalData onSubmit={nextStage} validateCpf={validateCpf} />,
+    <DeliveryData onSubmit={onSubmit} />,
+  ];
+
   function nextStage() {
     setCurrentPage(currentPage + 1);
   }
 
-  function currentForm(current) {
-    switch (current) {
-      case 0:
-        return <UserData onSubmit={nextStage} />;
-      case 1:
-        return <PersonalData onSubmit={nextStage} validateCpf={validateCpf} />;
-      case 2:
-        return <DeliveryData onSubmit={onSubmit} />;
-      default:
-        return <Typography>Error when selecting form.</Typography>;
-    }
-  }
-
-  return <>{currentForm(currentPage)}</>;
+  return <>{form[currentPage]}</>;
 }
 
 export default RegistrationForm;
