@@ -1,9 +1,14 @@
 import { Button, TextField } from '@mui/material';
 import React from 'react';
 
-function DeliveryData() {
+function DeliveryData({ onSubmit }) {
   return (
-    <form>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit();
+      }}
+    >
       <TextField
         id='cep'
         label='cep'

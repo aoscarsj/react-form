@@ -1,15 +1,21 @@
 import { Button, TextField } from '@mui/material';
 import React from 'react';
 
-function UserData() {
+function UserData({ onSubmit }) {
   return (
-    <form>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit();
+      }}
+    >
       <TextField
         id='email'
         label='email'
         type='email'
         variant='outlined'
         margin='normal'
+        required
         fullWidth
       />
       <TextField
@@ -17,6 +23,7 @@ function UserData() {
         label='password'
         type='password'
         variant='outlined'
+        required
         margin='normal'
         fullWidth
       />
