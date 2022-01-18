@@ -1,25 +1,36 @@
 import { Button, TextField } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 function UserData({ onSubmit }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit();
+        onSubmit({ email, password });
       }}
     >
       <TextField
         id='email'
+        value={email}
         label='email'
         type='email'
         variant='outlined'
         margin='normal'
+        onChange={(event) => {
+          setEmail(event.target.value);
+        }}
         required
         fullWidth
       />
       <TextField
         id='password'
+        value={password}
+        onChange={(event) => {
+          setPassword(event.target.value);
+        }}
         label='password'
         type='password'
         variant='outlined'
