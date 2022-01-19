@@ -7,7 +7,7 @@ import UserData from './UserData';
 // useState eh assincrona, ele agenda a atualizacao mas nao eh exatamente no momento
 // useEffect => add um efeito para qnd algo no react for disparado.
 
-function RegistrationForm({ onSubmit, validateCpf }) {
+function RegistrationForm({ onSubmit, validations }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [collectedData, setCollectedData] = useState({});
 
@@ -16,9 +16,9 @@ function RegistrationForm({ onSubmit, validateCpf }) {
   });
 
   const form = [
-    <UserData onSubmit={collectData} />,
-    <PersonalData onSubmit={collectData} validateCpf={validateCpf} />,
-    <DeliveryData onSubmit={collectData} />,
+    <UserData onSubmit={collectData} validations={validations} />,
+    <PersonalData onSubmit={collectData} validations={validations} />,
+    <DeliveryData onSubmit={collectData} validations={validations} />,
     <Typography variant='h5'>Thanks for registering!</Typography>,
   ];
 

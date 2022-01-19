@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Switch, FormControlLabel } from '@mui/material';
 
-function PersonalData({ onSubmit, validateCpf }) {
+function PersonalData({ onSubmit, validations }) {
   // deconstructing the object 'props'
   const [name, setName] = useState('Artur');
   const [lastName, setLastName] = useState('');
@@ -9,6 +9,14 @@ function PersonalData({ onSubmit, validateCpf }) {
   const [newsLetter, setNewsLetter] = useState(true);
   const [promotions, setPromotions] = useState(true);
   const [errors, setErrors] = useState({ cpf: { valid: true, text: '' } });
+
+  function validateFields(event) {
+    const { name, value } = event.target;
+    const newState = { ...errors };
+    newState[name] = validations[name](value);
+    setErrors(newState);
+    console.log(newState);
+  }
 
   return (
     <form
@@ -46,13 +54,11 @@ function PersonalData({ onSubmit, validateCpf }) {
         error={!errors.cpf.valid}
         helperText={errors.cpf.text}
         value={cpf}
+        name='cpf'
         onChange={(event) => {
           setCpf(event.target.value);
         }}
-        onBlur={(event) => {
-          const isValid = validateCpf(cpf);
-          setErrors({ cpf: isValid });
-        }} //after the focus
+        onBlur={validateFields} //after the focus
       />
       <FormControlLabel
         label='Promotions'
