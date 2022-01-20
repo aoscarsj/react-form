@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { TextField, Button, Switch, FormControlLabel } from '@mui/material';
 import RegistrationValidations from '../../contexts/RegistrationValidations';
+import useErrors from '../hooks/useErrors';
 function PersonalData({ onSubmit }) {
   // deconstructing the object 'props'
   const [name, setName] = useState('Artur');
@@ -8,19 +9,10 @@ function PersonalData({ onSubmit }) {
   const [cpf, setCpf] = useState('');
   const [newsLetter, setNewsLetter] = useState(true);
   const [promotions, setPromotions] = useState(true);
-  const [errors, setErrors] = useState({ cpf: { valid: true, text: '' } });
-
   const validations = useContext(RegistrationValidations);
-  function validateFields(event) {
-    const { name, value } = event.target;
-    const newState = { ...errors };
-    newState[name] = validations[name](value);
-    setErrors(newState);
-  }
-  function canSend() {
-    for (let field in errors) if (!errors[field].valid) return false;
-    return true;
-  }
+
+  const [errors, validateFields, canSend] = useErrors(validations);
+
   return (
     <form
       onSubmit={(event) => {
