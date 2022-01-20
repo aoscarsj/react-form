@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { TextField, Button, Switch, FormControlLabel } from '@mui/material';
-
-function PersonalData({ onSubmit, validations }) {
+import RegistrationValidations from '../../contexts/RegistrationValidations';
+function PersonalData({ onSubmit }) {
   // deconstructing the object 'props'
   const [name, setName] = useState('Artur');
   const [lastName, setLastName] = useState('');
@@ -10,19 +10,23 @@ function PersonalData({ onSubmit, validations }) {
   const [promotions, setPromotions] = useState(true);
   const [errors, setErrors] = useState({ cpf: { valid: true, text: '' } });
 
+  const validations = useContext(RegistrationValidations);
   function validateFields(event) {
     const { name, value } = event.target;
     const newState = { ...errors };
     newState[name] = validations[name](value);
     setErrors(newState);
-    console.log(newState);
   }
-
+  function canSend() {
+    for (let field in errors) if (!errors[field].valid) return false;
+    return true;
+  }
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmit({ name, lastName, cpf, promotions, newsLetter });
+        if (canSend())
+          onSubmit({ name, lastName, cpf, promotions, newsLetter });
       }}
     >
       <TextField
@@ -30,6 +34,7 @@ function PersonalData({ onSubmit, validations }) {
         label='Name'
         fullWidth
         margin='normal'
+        name='name'
         value={name}
         onChange={(event) => {
           setName(event.target.value);
@@ -39,6 +44,7 @@ function PersonalData({ onSubmit, validations }) {
         value={lastName}
         id='lastName'
         label='Last Name'
+        name='lastName'
         fullWidth
         margin='normal'
         onChange={(event) => {
@@ -88,7 +94,7 @@ function PersonalData({ onSubmit, validations }) {
       />
 
       <Button type='submit' variant='contained'>
-        Confirm
+        Next
       </Button>
     </form>
   );

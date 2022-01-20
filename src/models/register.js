@@ -1,5 +1,5 @@
 function validateCpf(cpf) {
-   if (cpf.length != 11)
+   if (cpf.length !== 11)
       return { valid: false, text: 'The CPF must have eleven digits.' }
    return { valid: true, text: '' }
 }
